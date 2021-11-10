@@ -11,7 +11,7 @@ const pool = new Pool({
 const getVisitor = async(req, res) => {
     try {
         const result = await pool.query(`SELECT id , name
-        FROM visitor
+        FROM visitot
         `);
         output = {
             status: "success",
