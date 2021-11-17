@@ -10,8 +10,8 @@ const pool = new Pool({
 
 const getVisitor = async(req, res) => {
     try {
-        const result = await pool.query(`SELECT id , name
-        FROM visitot
+        const result = await pool.query(`SELECT visitor_id, first_name, last_name, tel, category, id_civiliz, contract, time_start, time_stop, tag_address
+        FROM public.visitor;        
         `);
         output = {
             status: "success",
