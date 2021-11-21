@@ -57,4 +57,6 @@ router.use((req, res, next) => {
   router.get('/data', db.getData);
   router.get('/data2', db.getData2)
 
+  router.post('/eventsarr', db.createArrayEvent);
+
 module.exports = router;
