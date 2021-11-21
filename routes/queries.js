@@ -14,7 +14,7 @@ const pool = new Pool({
 
 const getTag = async(req, res) => {
     try {
-        const result = await pool.query(`SELECT tag_id, tag_address FROM diis.tag`);
+        const result = await pool.query(`SELECT tag_id, tag_address FROM diis.tag order by tag_id `);
         output = {
             status: "success",
             result: result
