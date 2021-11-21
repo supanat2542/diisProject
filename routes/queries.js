@@ -464,7 +464,7 @@ const createLocation = async(req, res) => {
 
 const createVisitor = async(req, res) => {
     try {
-        console.log(req)
+        console.log(req.body)
         for (let id in req.body) {
 
             let tag_address = "NULL";
