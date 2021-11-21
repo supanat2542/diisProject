@@ -474,7 +474,11 @@ const createVisitor = async(req, res) => {
             let category = "NULL";
             let id_civiliz = "NULL";
             let contract = "NULL";
+            let time = "NULL";
 
+            if (req.body[id].time != undefined) {
+                time = req.body[id].time;
+            }
             if (req.body[id].tag_address != undefined) {
                 tag_address = req.body[id].tag_address;
             }
@@ -496,7 +500,6 @@ const createVisitor = async(req, res) => {
             if (req.body[id].contract != undefined) {
                 contract = req.body[id].contract;
             }
-            const time = moment().locale('th').format();
             // const sql = `INSERT INTO diis.visitor (tag_address,first_name, last_name, tel, category,id_civiliz,contract,time_start) VALUES(${tag_address}','${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}','${time}')`
             const sql = `INSERT INTO diis.visitor(first_name, last_name, tel, category, id_civiliz, contract, time_start, tag_address) VALUES( '${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}', '${time}', '${tag_address}');`
             
