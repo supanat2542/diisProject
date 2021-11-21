@@ -521,11 +521,15 @@ const createScanlog = async(req, res) => {
     try {
         for (let id in req.body) {
 
+            let time = "NULL";
             let scanner_id = "NULL";
             let device_address = "NULL";
             let device_name = "NULL";
             let device_rssi = "NULL";
 
+            if (req.body[id].time != undefined) {
+                time = req.body[id].time;
+            }
             if (req.body[id].scanner_id != undefined) {
                 scanner_id = req.body[id].scanner_id;
             }
@@ -540,8 +544,7 @@ const createScanlog = async(req, res) => {
             }
 
             // const time = new Date(Date.now()).toISOString();
-            const time = moment().locale('th').format();
-            console.log(time)
+
            const sql = `INSERT INTO diis.scanlog
             (scanner_id, device_address, device_name, scan_timestamp, device_rssi)
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${time}', ${device_rssi});
