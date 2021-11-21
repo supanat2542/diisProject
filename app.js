@@ -5,6 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
+const corsOptions = {
+  origin: 'http://localhost:8081',
+  credentials: true,
+};
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apisRouter = require('./routes/apis')
