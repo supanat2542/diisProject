@@ -26,7 +26,7 @@ router.post('/scanner', db.createScanner);
 router.put('/scanner/:id', db.updateScanner);
 router.delete('/scanner/:id', db.deleteScanner);
 
-router.get('/visitors', db.getVisitor);
+router.get('/visitors',cors(corsOptions), db.getVisitor);
 router.post('/visitors', db.createVisitor);
 router.put('/visitors/:id', db.updateVisitor);
 router.delete('/visitors/:id', db.deleteVisitor);

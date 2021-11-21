@@ -5,10 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
-const corsOptions = {
-  origin: 'http://localhost:8081',
-  credentials: true,
-};
+app.use(cors())
+
+var corsOptions = {
+  origin: 'https://diis.herokuapp.com/',
+  optionsSuccessStatus: 200 
+}
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -28,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api', apisRouter);
+app.use('/api',cors(corsOptions), apisRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -45,15 +47,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 
-  
-});
-
-app.use(function(err, req, res, next) {
-
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
-  res.setHeader('Access-Control-Allow-Headers', 'content-type');
-  next(); 
   
 });
 
