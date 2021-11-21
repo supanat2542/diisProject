@@ -53,6 +53,12 @@ router.use((req, res, next) => {
   router.put('/scanlog/:id', db.updateScanlog);
   router.delete('/scanlog/:id', db.deleteScanlog);
   router.post('/scanlog', db.createScanlog);
+
+  router.get('/events', db.getEvent);
+  router.post('/events', db.createEvent);
+  router.put('/events/:id', db.updateEvent);
+  router.delete('/events/:id', db.deleteEvent);
+  router.post('/eventsarr', db.createArrayEvent);
   
   router.get('/data', db.getData);
   router.get('/data2', db.getData2)
