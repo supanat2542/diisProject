@@ -132,10 +132,22 @@ const getLocation = async(req, res) => {
 
 const getVisitor = async(req, res) => {
     try {
-        const result = await pool.query(`SELECT visitor_id, first_name, last_name, tel, category,id_civiliz,contract,time_start,time_stop,visitor.tag_address , tag_id
-        FROM diis.visitor
-        INNER join diis.tag 
-        ON tag.tag_address = visitor.tag_address 
+        let visitor_id = "NULL";
+        let visitor_select = ``;
+            if (req.query.visitor_id != undefined) {
+                visitor_id = req.query.visitor_id;
+                visitor_select =`and visitor_id = ${visitor_id}`
+            }
+
+        let time_stop = "NULL";
+        let time_stop_select = ``;
+            if (req.query.time_stop != undefined) {
+                time_stop = req.query.time_stop;
+                time_stop_select =`and time_stop is null`
+            }
+        const result = await pool.query(`select visitor_id, first_name, last_name, tel, category,id_civiliz,contract,time_start,time_stop,visitor.tag_address , tag_id
+        FROM diis.visitor,diis.tag 
+        Where visitor.tag_address  = tag.tag_address ${visitor_select} ${time_stop_select}
         order by time_stop desc
         `);
         output = {
@@ -160,10 +172,16 @@ const getItem = async(req, res) => {
             if (req.query.item_id != undefined) {
                 item_id = req.query.item_id;
                 item_select =`and item_id = ${item_id}`
-        }
+            }
+        let time_stop = "NULL";
+        let time_stop_select = ``;
+            if (req.query.time_stop != undefined) {
+                time_stop = req.query.time_stop;
+                time_stop_select =`and time_stop is null`
+            }
         const result = await pool.query(`SELECT item_id, tool_name, "Owner", parcel_number, tool_person, detail, time_start, time_stop, items.tag_address,tag_id
         FROM diis.items,diis.tag 
-        Where tag.tag_address = items.tag_address ${item_select}
+        Where tag.tag_address = items.tag_address ${item_select} ${time_stop_select}
         order by time_stop desc`);
         output = {
             status: "success",
@@ -182,12 +200,27 @@ const getItem = async(req, res) => {
 
 const getScanlog = async(req, res) => {
     try {
+        let time_start = "NULL";
+        let start_select = ``;
+            if (req.query.time_start != undefined) {
+                time_start = req.query.time_start;
+                start_select = `and scan_timestamp >= '${time_start}' `
+            }
+        let time_stop = "NULL";
+        let stop_select = ``;
+            if (req.query.time_stop != undefined) {
+                time_stop = req.query.time_stop;
+                stop_select = ` and scan_timestamp <= '${time_stop}' `
+            }
+        let tag_address = "NULL";
+        let tag_select = ``;
+            if (req.query.tag_address != undefined) {
+                tag_address = req.query.tag_address;
+                tag_select = `and device_address = '${tag_address}' `
+            }
         const result = await pool.query(`select device_address , scanlog.scanner_id , scan_timestamp ,room
-        FROM diis.scanlog 
-        INNER join  diis.scanner 
-        ON scanlog.scanner_id = scanner.scanner_address 
-        INNER join  diis.location
-        ON  scanner.location_id = location.location_id 
+        FROM diis.scanlog,diis.scanner,diis.location	
+        Where scanlog.scanner_id = scanner.scanner_address and scanner.location_id = location.location_id ${start_select} ${stop_select} ${tag_select}
         order by scan_timestamp desc `);
         output = {
             status: "success",
@@ -868,10 +901,6 @@ const getData2 = async(req, res) => {
     }
     res.json(output);
 }
-
-
-
-
 
 
 
