@@ -8,7 +8,7 @@ var cors = require('cors');
 app.use(cors())
 
 var corsOptions = {
-  origin: 'https://diis.herokuapp.com/',
+  origin: 'http://localhost:8081/',
   optionsSuccessStatus: 200 
 }
 
