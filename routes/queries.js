@@ -132,7 +132,6 @@ const getLocation = async(req, res) => {
 
 const getVisitor = async(req, res) => {
     try {
-        console.warn(req)
         let visitor_id = "NULL";
         let visitor_select = ``;
             if (req.query.visitor_id != undefined) {
@@ -496,7 +495,7 @@ const createVisitor = async(req, res) => {
                 contract = req.body[id].contract;
             }
             const time = moment().locale('th').format();
-            console.log("time now : "+moment().format())
+            console.log("time now : "+time)
             console.log("time thai : "+moment().tz('Asia/Bangkok').format())
             console.log("time us : "+moment().tz('America/Los_Angeles').format())
             // const sql = `INSERT INTO diis.visitor (tag_address,first_name, last_name, tel, category,id_civiliz,contract,time_start) VALUES(${tag_address}','${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}','${time}')`
