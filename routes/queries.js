@@ -50,7 +50,7 @@ const getTaguse = async(req, res) => {
 
 const getEdit = async(req, res) => {
     try {
-        console.log(req.query)
+        
         let tag_address = "NULL";
                 tag_address = req.query.tag_address;
         const result = await pool.query(`SELECT visitor_id, first_name, last_name, tel, category, id_civiliz, contract, time_start, time_stop, tag_address
@@ -73,7 +73,7 @@ const getEdit = async(req, res) => {
 
 const getEditItem = async(req, res) => {
     try {
-        console.log(req.query)
+        
         let tag_address = "NULL";
                 tag_address = req.query.tag_address;
         const result = await pool.query(`SELECT item_id, tool_name, "Owner", parcel_number, tool_person, detail, time_start, time_stop, tag_address
@@ -240,7 +240,7 @@ const getScanlog = async(req, res) => {
 
 const getSelectlog = async(req, res) => {
     try {
-        console.log(req.query)
+        
         let device_address = "NULL";
         let time_start = "NULL";
         let time_stop = "NULL";
@@ -263,9 +263,8 @@ const getSelectlog = async(req, res) => {
         ON  scanner.location_id = location.location_id 
         where scanlog.device_address = '${device_address}' and scan_timestamp >= '${time_start}' and scan_timestamp <= '${time_stop}'
         order by scan_timestamp desc `);
+
         
-        console.log(time_start)
-        console.log(time_stop)
         output = {
             status: "success",
             result: result
@@ -314,7 +313,7 @@ const createTag = async(req, res) => {
 const createItem = async(req, res) => {
     try {
         for (let id in req.body) {
-            console.log(req.body);
+            
             let tool_name = "NULL";
             let Owner = "NULL";
             let parcel_number = "NULL";
@@ -344,7 +343,7 @@ const createItem = async(req, res) => {
             const sql = `INSERT INTO diis.items
             (tool_name, "Owner", parcel_number, tool_person, detail, time_start, tag_address)
             VALUES('${tool_name}', '${Owner}', '${parcel_number}', '${tool_person}', '${detail}', '${time_start}', '${tag_address}');`
-            console.log(sql)
+
             await pool.query(sql)
         }
 
@@ -464,7 +463,7 @@ const createLocation = async(req, res) => {
 
 const createVisitor = async(req, res) => {
     try {
-        console.log(req.body)
+        
         for (let id in req.body) {
 
             let tag_address = "NULL";
@@ -474,7 +473,7 @@ const createVisitor = async(req, res) => {
             let category = "NULL";
             let id_civiliz = "NULL";
             let contract = "NULL";
-
+            console.log(req.body);
             if (req.body[id].tag_address != undefined) {
                 tag_address = req.body[id].tag_address;
             }
@@ -498,9 +497,6 @@ const createVisitor = async(req, res) => {
             }
 
             const time = moment().tz('Asia/Bangkok').format();
-            console.log("Time new date : "+time);
-            console.log("moment timezomne thg : "+moment().tz('Asia/Bangkok'));
-            // const sql = `INSERT INTO diis.visitor (tag_address,first_name, last_name, tel, category,id_civiliz,contract,time_start) VALUES(${tag_address}','${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}','${time}')`
             const sql = `INSERT INTO diis.visitor(first_name, last_name, tel, category, id_civiliz, contract, time_start, tag_address) VALUES( '${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}', '${time}', '${tag_address}');`
             
             await pool.query(sql)
@@ -546,7 +542,6 @@ const createScanlog = async(req, res) => {
             }
 
             const time = moment().tz('Asia/Bangkok').format();
-            console.warn(time)
            const sql = `INSERT INTO diis.scanlog
             (scanner_id, device_address, device_name, scan_timestamp, device_rssi)
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${time}', ${device_rssi});
@@ -596,9 +591,7 @@ const updateTag = async(req, res) => {
 
 const updateTaguse = async(req, res) => {
     try {
-        // const result = await pool.query(`UPDATE diis.taguse SET taguse_id=${req.body.taguse_id}('diis.taguse_taguse_id_seq'::regclass), tag_address='${req.body.tag_address}', time_start='${req.body.time_start}', time_stop='${req.body.time_stop}', visitor_id=${req.body.visitor_id} where taguse_id = ${req.params.taguse_id}`);
-        // console.log(req.body.visitor_id);
-        const result = await pool.query(`UPDATE diis.taguse SET time_stop='${req.body.time_stop}' where taguse_id = '${req.params.id}'`);
+         const result = await pool.query(`UPDATE diis.taguse SET time_stop='${req.body.time_stop}' where taguse_id = '${req.params.id}'`);
         
         output = {
             status: "success",
@@ -677,9 +670,6 @@ const updateVisitor = async(req, res) => {
 
 const updateData = async(req, res) => {
     try {
-        console.log(req.params.id)
-        console.log(req.body)
-        console.log(`UPDATE diis.visitor SET first_name='${req.body.first_name}', last_name='${req.body.last_name}', tel='${req.body.tel}', category='${req.body.category}', id_civiliz='${req.body.id_civiliz}', contract='${req.body.contract}' where visitor_id = ${req.params.id};`)
         const result = await pool.query(`UPDATE diis.visitor SET first_name='${req.body.first_name}', last_name='${req.body.last_name}', tel='${req.body.tel}', category='${req.body.category}', id_civiliz='${req.body.id_civiliz}', contract='${req.body.contract}' where visitor_id = ${req.params.id};`);
         output = {
             status: "success",
@@ -698,10 +688,7 @@ const updateData = async(req, res) => {
 
 const updateDataItem = async(req, res) => {
     try {
-        console.log(req.params.id)
-        console.log(req.body)
-        console.log(`UPDATE diis.items SET tool_name='${req.body.tool_name}', "Owner"='${req.body.Owner}', parcel_number='${req.body.parcel_number}', tool_person='${req.body.tool_person}', detail='${req.body.detail}' where item_id = ${req.params.id};`)
-        const result = await pool.query(`UPDATE diis.items SET tool_name='${req.body.tool_name}', "Owner"='${req.body.Owner}', parcel_number='${req.body.parcel_number}', tool_person='${req.body.tool_person}', detail='${req.body.detail}' where item_id = ${req.params.id}`);
+         const result = await pool.query(`UPDATE diis.items SET tool_name='${req.body.tool_name}', "Owner"='${req.body.Owner}', parcel_number='${req.body.parcel_number}', tool_person='${req.body.tool_person}', detail='${req.body.detail}' where item_id = ${req.params.id}`);
         output = {
             status: "success",
             result: result
