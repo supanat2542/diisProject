@@ -499,7 +499,7 @@ const createVisitor = async(req, res) => {
 
             const time = new Date(Date.now()).toISOString();
             console.log("Time new date : "+time);
-            console.log("moment timezomne thg : "+moment().tz('Asia/Bangkok').format("hh:mm:ss A"));
+            console.log("moment timezomne thg : "+moment().tz('Asia/Bangkok').format());
             // const sql = `INSERT INTO diis.visitor (tag_address,first_name, last_name, tel, category,id_civiliz,contract,time_start) VALUES(${tag_address}','${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}','${time}')`
             const sql = `INSERT INTO diis.visitor(first_name, last_name, tel, category, id_civiliz, contract, time_start, tag_address) VALUES( '${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}', '${time}', '${tag_address}');`
             
