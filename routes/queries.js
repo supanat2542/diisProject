@@ -474,11 +474,6 @@ const createVisitor = async(req, res) => {
             let category = "NULL";
             let id_civiliz = "NULL";
             let contract = "NULL";
-            let time = "NULL";
-
-            if (req.body[id].time != undefined) {
-                time = req.body[id].time;
-            }
             if (req.body[id].tag_address != undefined) {
                 tag_address = req.body[id].tag_address;
             }
@@ -500,6 +495,10 @@ const createVisitor = async(req, res) => {
             if (req.body[id].contract != undefined) {
                 contract = req.body[id].contract;
             }
+            const time = moment().locale('th').format();
+            console.log("time now : "+moment().format())
+            console.log("time thai : "+moment().tz('Asia/Bangkok').format())
+            console.log("time us : "+moment().tz('America/Los_Angeles').format())
             // const sql = `INSERT INTO diis.visitor (tag_address,first_name, last_name, tel, category,id_civiliz,contract,time_start) VALUES(${tag_address}','${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}','${time}')`
             const sql = `INSERT INTO diis.visitor(first_name, last_name, tel, category, id_civiliz, contract, time_start, tag_address) VALUES( '${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}', '${time}', '${tag_address}');`
             
@@ -951,7 +950,7 @@ const createArrayEvent = async(req, res) => {
             }
 
             // const time = new Date(Date.now()).toISOString();
-            const time = moment().locale('th').format();;
+            const time = moment().locale('th').format();
             const sql = `INSERT INTO scanlog(scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}', ${device_txpower}, '${time}', ${device_rssi})`;
             await pool.query(sql);
