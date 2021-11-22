@@ -345,6 +345,7 @@ const createItem = async(req, res) => {
             const sql = `INSERT INTO diis.items
             (tool_name, "Owner", parcel_number, tool_person, detail, time_start, tag_address)
             VALUES('${tool_name}', '${Owner}', '${parcel_number}', '${tool_person}', '${detail}', '${time_start}', '${tag_address}');`
+            console.log(sql)
             await pool.query(sql)
         }
 
