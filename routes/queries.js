@@ -377,7 +377,7 @@ const createTaguse = async(req, res) => {
             if (req.body[id].visitor_id != undefined) {
                 visitor_id = req.body[id].visitor_id;
             }
-            const time = moment().locale('th').format();
+            const time = moment().tz('Asia/Bangkok').format();
             const sql = `INSERT INTO diis.taguse (tag_address, time_start, visitor_id) VALUES('${tag_address}', '${time}', ${visitor_id})`
             await pool.query(sql)
         }
@@ -497,9 +497,9 @@ const createVisitor = async(req, res) => {
                 contract = req.body[id].contract;
             }
 
-            const time = new Date(Date.now()).toISOString();
+            const time = moment().tz('Asia/Bangkok').format();
             console.log("Time new date : "+time);
-            console.log("moment timezomne thg : "+moment().tz('Asia/Bangkok').format());
+            console.log("moment timezomne thg : "+moment().tz('Asia/Bangkok'));
             // const sql = `INSERT INTO diis.visitor (tag_address,first_name, last_name, tel, category,id_civiliz,contract,time_start) VALUES(${tag_address}','${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}','${time}')`
             const sql = `INSERT INTO diis.visitor(first_name, last_name, tel, category, id_civiliz, contract, time_start, tag_address) VALUES( '${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}', '${time}', '${tag_address}');`
             
@@ -545,7 +545,7 @@ const createScanlog = async(req, res) => {
                 device_rssi = req.body[id].device_rssi;
             }
 
-            const time = new Date(Date.now()).toISOString();
+            const time = moment().tz('Asia/Bangkok').format();
             console.warn(time)
            const sql = `INSERT INTO diis.scanlog
             (scanner_id, device_address, device_name, scan_timestamp, device_rssi)
@@ -949,8 +949,7 @@ const createArrayEvent = async(req, res) => {
                 device_rssi = req.body[id].device_rssi;
             }
 
-            // const time = new Date(Date.now()).toISOString();
-            const time = moment().locale('th').format();;
+            const time = moment().tz('Asia/Bangkok').format();
             const sql = `INSERT INTO scanlog(scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}', ${device_txpower}, '${time}', ${device_rssi})`;
             await pool.query(sql);
