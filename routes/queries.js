@@ -308,6 +308,38 @@ const createTag = async(req, res) => {
     res.json(output);
 }
 
+/************************************** CREATE TABLE test ************************************/
+
+const createTest = async(req, res) => {
+    try {
+        console.log(req.body)
+        for (let id in req.body) {
+
+            let tag_address = "NULL";
+
+            if (req.body[id].tag_address != undefined) {
+                tag_address = req.body[id].tag_address;
+            }
+            const sql = `INSERT INTO diis.tag (tag_address) VALUES('${tag_address}')`
+            await pool.query(sql)
+        }
+
+        output = {
+            status: "success",
+            result: req.body.lenght
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+
+
+
 /************************************** CREATE Items ************************************/
 
 const createItem = async(req, res) => {
@@ -992,5 +1024,6 @@ module.exports = {
     updateData,
     getEditItem,
     updateDataItem,
-    createArrayEvent
+    createArrayEvent,
+    createTest
 }
