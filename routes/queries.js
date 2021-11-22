@@ -339,7 +339,7 @@ const createItem = async(req, res) => {
             if (req.body[id].tag_address != undefined) {
                 tag_address = req.body[id].tag_address;
             }
-            const time_start = new Date(Date.now()).toISOString();
+            const time_start =  moment().tz('Asia/Bangkok').format();
             const sql = `INSERT INTO diis.items
             (tool_name, "Owner", parcel_number, tool_person, detail, time_start, tag_address)
             VALUES('${tool_name}', '${Owner}', '${parcel_number}', '${tool_person}', '${detail}', '${time_start}', '${tag_address}');`
