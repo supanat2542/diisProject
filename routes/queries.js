@@ -26,6 +26,7 @@ const getTag = async(req, res) => {
             result: error
         }
     }
+    
     res.json(output);
 }
 
