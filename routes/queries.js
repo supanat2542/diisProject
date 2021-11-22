@@ -1,5 +1,5 @@
 const { request } = require('express');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const { Pool } = require('pg');
 const pool = new Pool({
     connectionString : process.env.DATABASE_URL = 'postgres://wgawxbdqhysitb:2237e7d2f53e1d3f1a6b6655db1710e5cb0c37f1a5760ba1d45ed4de27bc8d89@ec2-3-229-166-245.compute-1.amazonaws.com:5432/dfefjelb0iakj2',
@@ -132,7 +132,6 @@ const getLocation = async(req, res) => {
 
 const getVisitor = async(req, res) => {
     try {
-        console.warn(req)
         let visitor_id = "NULL";
         let visitor_select = ``;
             if (req.query.visitor_id != undefined) {
@@ -474,11 +473,7 @@ const createVisitor = async(req, res) => {
             let category = "NULL";
             let id_civiliz = "NULL";
             let contract = "NULL";
-            let time = "NULL";
 
-            if (req.body[id].time != undefined) {
-                time = req.body[id].time;
-            }
             if (req.body[id].tag_address != undefined) {
                 tag_address = req.body[id].tag_address;
             }
@@ -500,6 +495,9 @@ const createVisitor = async(req, res) => {
             if (req.body[id].contract != undefined) {
                 contract = req.body[id].contract;
             }
+            const time = moment().format();
+            console.log("time : "+time)
+            console.log("time thai : "+moment().tz('Asia/Bangkok').locale('th').format())
             // const sql = `INSERT INTO diis.visitor (tag_address,first_name, last_name, tel, category,id_civiliz,contract,time_start) VALUES(${tag_address}','${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}','${time}')`
             const sql = `INSERT INTO diis.visitor(first_name, last_name, tel, category, id_civiliz, contract, time_start, tag_address) VALUES( '${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}', '${time}', '${tag_address}');`
             
