@@ -253,7 +253,7 @@ const getSelectlog = async(req, res) => {
             if (req.query.time_stop != "Invalid date") {
                 time_stop = req.query.time_stop;
             }else{
-                time_stop = moment().locale('th').format()
+                time_stop = moment().tz('Asia/Bangkok').format()
             }
             const result = await pool.query(`select device_name ,device_address , scanlog.scanner_id , scan_timestamp ,room ,device_rssi 
         FROM diis.scanlog 
@@ -340,7 +340,7 @@ const createItem = async(req, res) => {
             if (req.body[id].tag_address != undefined) {
                 tag_address = req.body[id].tag_address;
             }
-            const time_start = moment().locale('th').format();
+            const time_start = moment().tz('Asia/Bangkok').format()
             const sql = `INSERT INTO diis.items
             (tool_name, "Owner", parcel_number, tool_person, detail, time_start, tag_address)
             VALUES('${tool_name}', '${Owner}', '${parcel_number}', '${tool_person}', '${detail}', '${time_start}', '${tag_address}');`
@@ -376,7 +376,7 @@ const createTaguse = async(req, res) => {
             if (req.body[id].visitor_id != undefined) {
                 visitor_id = req.body[id].visitor_id;
             }
-            const time = moment().locale('th').format();
+            const time = moment().tz('Asia/Bangkok').format()
             const sql = `INSERT INTO diis.taguse (tag_address, time_start, visitor_id) VALUES('${tag_address}', '${time}', ${visitor_id})`
             await pool.query(sql)
         }
@@ -494,7 +494,7 @@ const createVisitor = async(req, res) => {
             if (req.body[id].contract != undefined) {
                 contract = req.body[id].contract;
             }
-            const time = moment().locale('th').format();
+            const time = moment().tz('Asia/Bangkok').format();
             console.log("time now : "+time)
             console.log("time thai : "+moment().tz('Asia/Bangkok').format())
             console.log("time us : "+moment().tz('America/Los_Angeles').format())
@@ -949,7 +949,7 @@ const createArrayEvent = async(req, res) => {
             }
 
             // const time = new Date(Date.now()).toISOString();
-            const time = moment().locale('th').format();
+            const time = moment().tz('Asia/Bangkok').format();
             const sql = `INSERT INTO scanlog(scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}', ${device_txpower}, '${time}', ${device_rssi})`;
             await pool.query(sql);
