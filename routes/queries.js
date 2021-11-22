@@ -953,7 +953,7 @@ const createArrayEvent = async(req, res) => {
             const sql = `INSERT INTO scanlog(scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}', ${device_txpower}, '${time}', ${device_rssi})`;
             await pool.query(sql); 
-            
+
         }
 
         output = {
@@ -966,6 +966,7 @@ const createArrayEvent = async(req, res) => {
             result: error
         };
     }
+    
     res.json(output);
 }
 
