@@ -1,5 +1,5 @@
 const { request } = require('express');
-const moment = require('moment-timezone');
+const moment = require('moment');
 const { Pool } = require('pg');
 const pool = new Pool({
     connectionString : process.env.DATABASE_URL = 'postgres://wgawxbdqhysitb:2237e7d2f53e1d3f1a6b6655db1710e5cb0c37f1a5760ba1d45ed4de27bc8d89@ec2-3-229-166-245.compute-1.amazonaws.com:5432/dfefjelb0iakj2',
@@ -26,7 +26,6 @@ const getTag = async(req, res) => {
             result: error
         }
     }
-
     res.json(output);
 }
 
@@ -133,6 +132,7 @@ const getLocation = async(req, res) => {
 
 const getVisitor = async(req, res) => {
     try {
+        console.warn(req)
         let visitor_id = "NULL";
         let visitor_select = ``;
             if (req.query.visitor_id != undefined) {
@@ -254,7 +254,7 @@ const getSelectlog = async(req, res) => {
             if (req.query.time_stop != "Invalid date") {
                 time_stop = req.query.time_stop;
             }else{
-                time_stop = moment().tz('Asia/Bangkok').format()
+                time_stop = moment().locale('th').format()
             }
             const result = await pool.query(`select device_name ,device_address , scanlog.scanner_id , scan_timestamp ,room ,device_rssi 
         FROM diis.scanlog 
@@ -341,7 +341,7 @@ const createItem = async(req, res) => {
             if (req.body[id].tag_address != undefined) {
                 tag_address = req.body[id].tag_address;
             }
-            const time_start = moment().tz('Asia/Bangkok').format()
+            const time_start = moment().locale('th').format();
             const sql = `INSERT INTO diis.items
             (tool_name, "Owner", parcel_number, tool_person, detail, time_start, tag_address)
             VALUES('${tool_name}', '${Owner}', '${parcel_number}', '${tool_person}', '${detail}', '${time_start}', '${tag_address}');`
@@ -377,7 +377,7 @@ const createTaguse = async(req, res) => {
             if (req.body[id].visitor_id != undefined) {
                 visitor_id = req.body[id].visitor_id;
             }
-            const time = moment().tz('Asia/Bangkok').format()
+            const time = moment().locale('th').format();
             const sql = `INSERT INTO diis.taguse (tag_address, time_start, visitor_id) VALUES('${tag_address}', '${time}', ${visitor_id})`
             await pool.query(sql)
         }
@@ -474,6 +474,11 @@ const createVisitor = async(req, res) => {
             let category = "NULL";
             let id_civiliz = "NULL";
             let contract = "NULL";
+            let time = "NULL";
+
+            if (req.body[id].time != undefined) {
+                time = req.body[id].time;
+            }
             if (req.body[id].tag_address != undefined) {
                 tag_address = req.body[id].tag_address;
             }
@@ -495,10 +500,6 @@ const createVisitor = async(req, res) => {
             if (req.body[id].contract != undefined) {
                 contract = req.body[id].contract;
             }
-            const time = moment().tz('Asia/Bangkok').format();
-            console.log("time now : "+time)
-            console.log("time thai : "+moment().tz('Asia/Bangkok').format())
-            console.log("time us : "+moment().tz('America/Los_Angeles').format())
             // const sql = `INSERT INTO diis.visitor (tag_address,first_name, last_name, tel, category,id_civiliz,contract,time_start) VALUES(${tag_address}','${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}','${time}')`
             const sql = `INSERT INTO diis.visitor(first_name, last_name, tel, category, id_civiliz, contract, time_start, tag_address) VALUES( '${first_name}', '${last_name}', '${tel}', '${category}', '${id_civiliz}', '${contract}', '${time}', '${tag_address}');`
             
@@ -523,10 +524,15 @@ const createScanlog = async(req, res) => {
     try {
         for (let id in req.body) {
 
+            let time = "NULL";
             let scanner_id = "NULL";
             let device_address = "NULL";
             let device_name = "NULL";
             let device_rssi = "NULL";
+
+            if (req.body[id].time != undefined) {
+                time = req.body[id].time;
+            }
             if (req.body[id].scanner_id != undefined) {
                 scanner_id = req.body[id].scanner_id;
             }
@@ -540,7 +546,8 @@ const createScanlog = async(req, res) => {
                 device_rssi = req.body[id].device_rssi;
             }
 
-            moment().tz('Asia/Bangkok').format();
+            // const time = new Date(Date.now()).toISOString();
+            console.warn(time)
            const sql = `INSERT INTO diis.scanlog
             (scanner_id, device_address, device_name, scan_timestamp, device_rssi)
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${time}', ${device_rssi});
@@ -944,11 +951,10 @@ const createArrayEvent = async(req, res) => {
             }
 
             // const time = new Date(Date.now()).toISOString();
-            const time = moment().tz('Asia/Bangkok').format();
+            const time = moment().locale('th').format();;
             const sql = `INSERT INTO scanlog(scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}', ${device_txpower}, '${time}', ${device_rssi})`;
-            await pool.query(sql); 
-
+            await pool.query(sql);
         }
 
         output = {
@@ -961,7 +967,6 @@ const createArrayEvent = async(req, res) => {
             result: error
         };
     }
-    
     res.json(output);
 }
 
