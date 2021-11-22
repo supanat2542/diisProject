@@ -791,7 +791,7 @@ const deleteTaguse = async(req, res) => {
 
 const deleteLocation = async(req, res) => {
     try {
-        const result = await pool.query(`DELETE FROM diis.location WHERE location_id = ${req.params.location_id}`);
+        const result = await pool.query(`DELETE FROM diis.location WHERE location_id = ${req.params.id}`);
         output = {
             status: "success",
             result: result
