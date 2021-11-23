@@ -987,9 +987,21 @@ const createArrayEvent = async(req, res) => {
     res.json(output);
 }
 
+const test = async (req, res) => {
+    try {
+      const result = await client.query(`INSERT INTO scanlog(scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
+      VALUES('${req.body.scanner_id}', '${req.body.device_address}', '${req.body.device_name}', '${req.body.device_appearance}', '${req.body.device_manufacturerdata}', '${req.body.device_serviceuuid}', ${req.body.device_txpower}, '${time}', ${req.body.device_rssi})`);
+      const results = { 'results': (result) ? result.rows : null };
+      res.json(results);
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
+  }
 
 
 module.exports = {
+    test,
     getTag,
     getTaguse,
     getScanner,
