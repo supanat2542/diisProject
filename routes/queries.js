@@ -933,7 +933,7 @@ const getData2 = async(req, res) => {
 const createArrayEvent = async(req, res) => {
     try {
         for (let id in req.body) {
-
+            console.log(req.body)
             let scanner_id = "NULL";
             let device_address = "NULL";
             let device_name = "NULL";
