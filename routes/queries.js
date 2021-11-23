@@ -312,7 +312,7 @@ const createTag = async(req, res) => {
 
 const createTest = async(req, res) => {
     try {
-        console.log(req)
+        console.log(req.body)
         for (let id in req.body) {
 
             let tag_address = "NULL";
