@@ -218,7 +218,7 @@ const getScanlog = async(req, res) => {
                 tag_address = req.query.tag_address;
                 tag_select = `and device_address = '${tag_address}' `
             }
-        const result = await pool.query(`select device_address , scanlog.scanner_id , scan_timestamp ,room
+        const result = await pool.query(`select device_address , scanlog.scanner_id , scan_timestamp ,room,floor
         FROM diis.scanlog,diis.scanner,diis.location	
         Where scanlog.scanner_id = scanner.scanner_address and scanner.location_id = location.location_id ${start_select} ${stop_select} ${tag_select}
         order by scan_timestamp desc `);
