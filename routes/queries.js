@@ -313,7 +313,7 @@ const createTag = async(req, res) => {
 const createTime = async(req, res) => {
     try {
         console.log("scan log data")
-            console.log(req.body)
+        console.log(req.body)
             const time = moment().tz('Asia/Bangkok').format();
             
             const sql = `INSERT INTO diis.scanlog
