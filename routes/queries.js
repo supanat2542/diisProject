@@ -312,17 +312,9 @@ const createTag = async(req, res) => {
 
 const createTime = async(req, res) => {
     try {
+        console.log("scan log data")
             console.log(req.body)
-
-            console.log(req.body.device_name)
-            console.log(req.body.scanner_id)
-            console.log(req.body.device_address)
-            console.log(req.body.rssi)
             const time = moment().tz('Asia/Bangkok').format();
-            console.log("scan log data")
-            console.log(`INSERT INTO diis.scanlog
-            (scanner_id, device_address, device_name,scan_timestamp, device_rssi)
-            VALUES('${req.body.scanner_id}', '${req.body.device_address}', '${req.body.device_name}', '${time}',${req.body.rssi})`);
             
             const sql = `INSERT INTO diis.scanlog
             (scanner_id, device_address, device_name,scan_timestamp, device_rssi)
