@@ -312,6 +312,7 @@ const createTag = async(req, res) => {
 
 const createTime = async(req, res) => {
     try {
+        console.log("scan log data")
         console.log(req.body)
         for (let id in req.body) {
 
@@ -324,29 +325,29 @@ const createTime = async(req, res) => {
 
             
             
-            if (req.body[id].device_name != undefined) {
-                device_name = req.body[id].device_name;
+            if (req.body.device_name != undefined) {
+                device_name = req.body.device_name;
             }
-            if (req.body[id].device_txpower != undefined) {
-                device_txpower = req.body[id].device_txpower;
-            }
-
-            if (req.body[id].device_address != undefined) {
-                device_address = req.body[id].device_address;
+            if (req.body.device_txpower != undefined) {
+                device_txpower = req.body.device_txpower;
             }
 
-            if (req.body[id].scanner_id != undefined) {
-                scanner_id = req.body[id].scanner_id;
+            if (req.body.device_address != undefined) {
+                device_address = req.body.device_address;
             }
 
-            if (req.body[id].device_appearance != undefined) {
-                device_appearance = req.body[id].device_appearance;
+            if (req.body.scanner_id != undefined) {
+                scanner_id = req.body.scanner_id;
             }
-            if (req.body[id].device_manufacturerdata != undefined) {
-                device_manufacturerdata = req.body[id].device_manufacturerdata;
+
+            if (req.body.device_appearance != undefined) {
+                device_appearance = req.body.device_appearance;
             }
-            if (req.body[id].device_serviceuuid != undefined) {
-                device_serviceuuid = req.body[id].device_serviceuuid;
+            if (req.body.device_manufacturerdata != undefined) {
+                device_manufacturerdata = req.body.device_manufacturerdata;
+            }
+            if (req.body.device_serviceuuid != undefined) {
+                device_serviceuuid = req.body.device_serviceuuid;
             }
             if (req.body[id].rssi != undefined) {
                 rssi = req.body[id].rssi;
