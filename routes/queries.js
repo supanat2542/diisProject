@@ -312,53 +312,21 @@ const createTag = async(req, res) => {
 
 const createTime = async(req, res) => {
     try {
-        console.log("scan log data")
-        console.log(req.body)
-
-            let device_name = "NULL";
-            let device_address = "NULL";
+            console.log(req.body)
+            
+            let device_name = '';
+            let device_address = 'NULL';
             let scanner_id = "NULL";
-            let device_appearance = "NULL";
-            let device_manufacturerdata = "NULL";
             let rssi = "NULL";
             console.log(req.body.device_name)
             console.log(req.body.scanner_id)
             console.log(req.body.device_address)
             console.log(req.body.rssi)
-            
-            
-            if (req.body.device_name != undefined) {
-                device_name = req.body.device_name;
-            }
-            if (req.body.device_txpower != undefined) {
-                device_txpower = req.body.device_txpower;
-            }
-
-            if (req.body.device_address != undefined) {
-                device_address = req.body.device_address;
-            }
-
-            if (req.body.scanner_id != undefined) {
-                scanner_id = req.body.scanner_id;
-            }
-
-            if (req.body.device_appearance != undefined) {
-                device_appearance = req.body.device_appearance;
-            }
-            if (req.body.device_manufacturerdata != undefined) {
-                device_manufacturerdata = req.body.device_manufacturerdata;
-            }
-            if (req.body.device_serviceuuid != undefined) {
-                device_serviceuuid = req.body.device_serviceuuid;
-            }
-            if (req.body[id].rssi != undefined) {
-                rssi = req.body[id].rssi;
-            }
             const time = moment().tz('Asia/Bangkok').format();
-            
+            console.log("scan log data")
             console.log(`INSERT INTO diis.scanlog
-            (scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
-            VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}',${device_txpower}, '${time}', ${rssi})`);
+            (scanner_id, device_address, device_name,scan_timestamp, device_rssi)
+            VALUES('${scanner_id}', '${device_name}', '', '${time}',${req.body.rssi})`);
             
             const sql = `INSERT INTO diis.scanlog
             (scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
