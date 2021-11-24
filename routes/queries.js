@@ -314,7 +314,6 @@ const createTime = async(req, res) => {
     try {
         console.log("scan log data")
         console.log(req.body)
-        for (let id in req.body) {
 
             let device_name = "NULL";
             let device_address = "NULL";
@@ -322,7 +321,10 @@ const createTime = async(req, res) => {
             let device_appearance = "NULL";
             let device_manufacturerdata = "NULL";
             let rssi = "NULL";
-
+            console.log(req.body.device_name)
+            console.log(req.body.scanner_id)
+            console.log(req.body.device_address)
+            console.log(req.body.rssi)
             
             
             if (req.body.device_name != undefined) {
@@ -359,7 +361,6 @@ const createTime = async(req, res) => {
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}',${device_txpower}, '${time}', ${rssi});`
             console.log(sql)
             await pool.query(sql)
-        }
 
         output = {
             status: "success",
