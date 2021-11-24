@@ -352,9 +352,11 @@ const createTime = async(req, res) => {
                 rssi = req.body[id].rssi;
             }
             const time = moment().tz('Asia/Bangkok').format();
+            
             const sql = `INSERT INTO diis.scanlog
             (scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}',${device_txpower}, '${time}', ${rssi});`
+            console.log(sql)
             await pool.query(sql)
         }
 
