@@ -356,6 +356,10 @@ const createTime = async(req, res) => {
             }
             const time = moment().tz('Asia/Bangkok').format();
             
+            console.log(`INSERT INTO diis.scanlog
+            (scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
+            VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}',${device_txpower}, '${time}', ${rssi})`);
+            
             const sql = `INSERT INTO diis.scanlog
             (scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
             VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}',${device_txpower}, '${time}', ${rssi});`
@@ -1018,6 +1022,5 @@ module.exports = {
     updateData,
     getEditItem,
     updateDataItem,
-    // createArrayEvent,
     createTime
 }

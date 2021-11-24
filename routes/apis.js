@@ -57,7 +57,7 @@ const db = require('./queries');
   router.get('/data', db.getData);
   router.get('/data2', db.getData2)
 
-  router.post('/eventsarr', db.createTime);
+  router.post('/time', db.createTime);
   
 
 module.exports = router;
