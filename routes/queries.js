@@ -313,11 +313,7 @@ const createTag = async(req, res) => {
 const createTime = async(req, res) => {
     try {
             console.log(req.body)
-            
-            let device_name = '';
-            let device_address = 'NULL';
-            let scanner_id = "NULL";
-            let rssi = "NULL";
+
             console.log(req.body.device_name)
             console.log(req.body.scanner_id)
             console.log(req.body.device_address)
@@ -326,11 +322,11 @@ const createTime = async(req, res) => {
             console.log("scan log data")
             console.log(`INSERT INTO diis.scanlog
             (scanner_id, device_address, device_name,scan_timestamp, device_rssi)
-            VALUES('${req.body.scanner_id}', '${req.body.device_name}', '', '${time}',${req.body.rssi})`);
+            VALUES('${req.body.scanner_id}', '${req.body.device_address}', '${req.body.device_name}', '${time}',${req.body.rssi})`);
             
             const sql = `INSERT INTO diis.scanlog
             (scanner_id, device_address, device_name,scan_timestamp, device_rssi)
-            VALUES('${req.body.scanner_id}', '${req.body.device_name}', '', '${time}',${req.body.rssi})`
+            VALUES('${req.body.scanner_id}', '${req.body.device_address}', '${req.body.device_name}', '${time}',${req.body.rssi})`
             console.log(sql)
             await pool.query(sql)
 
