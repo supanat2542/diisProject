@@ -326,11 +326,11 @@ const createTime = async(req, res) => {
             console.log("scan log data")
             console.log(`INSERT INTO diis.scanlog
             (scanner_id, device_address, device_name,scan_timestamp, device_rssi)
-            VALUES('${scanner_id}', '${device_name}', '', '${time}',${req.body.rssi})`);
+            VALUES('${req.body.scanner_id}', '${req.body.device_name}', '', '${time}',${req.body.rssi})`);
             
             const sql = `INSERT INTO diis.scanlog
-            (scanner_id, device_address, device_name, device_appearance, device_manufacturerdata, device_serviceuuid, device_txpower, scan_timestamp, device_rssi)
-            VALUES('${scanner_id}', '${device_address}', '${device_name}', '${device_appearance}', '${device_manufacturerdata}', '${device_serviceuuid}',${device_txpower}, '${time}', ${rssi});`
+            (scanner_id, device_address, device_name,scan_timestamp, device_rssi)
+            VALUES('${req.body.scanner_id}', '${req.body.device_name}', '', '${time}',${req.body.rssi})`
             console.log(sql)
             await pool.query(sql)
 
