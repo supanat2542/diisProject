@@ -313,17 +313,34 @@ const createTag = async(req, res) => {
 const createTime = async(req, res) => {
     try {
         console.log(req.body)
-        // for (let id in req.body) {
+        for (let id in req.body) {
             console.log("scan log data")
+            let scanner_id = "NULL";
+            let device_address = "NULL";
+            let device_name = "NULL";
+            let device_rssi = "NULL";
 
-                const time = moment().tz('Asia/Bangkok').format();
+            if (req.body[id].scanner_id != undefined) {
+                scanner_id = req.body[id].scanner_id;
+            }
+            if (req.body[id].device_address != undefined) {
+                device_address = req.body[id].device_address;
+            }
+            if (req.body[id].device_name != undefined) {
+                device_name = req.body[id].device_name;
+            }
+            if (req.body[id].device_rssi != undefined) {
+                device_rssi = req.body[id].device_rssi;
+            }
+
+            const time = moment().tz('Asia/Bangkok').format();
                 
-                const sql = `INSERT INTO diis.scanlog
-                (scanner_id, device_address, device_name,scan_timestamp, device_rssi)
-                VALUES('${req.body.scanner_id}', '${req.body.device_address}', '${req.body.device_name}', '${time}',${req.body.rssi})`
-                console.log(sql)
-                await pool.query(sql)
-        // }
+            const sql = `INSERT INTO diis.scanlog
+            (scanner_id, device_address, device_name,scan_timestamp, device_rssi)
+            VALUES('${scanner_id}', '${device_address}', '${device_name}', '${time}',${device_rssi})`
+            console.log(sql)
+            await pool.query(sql)
+        }
         output = {
             status: "success",
             result: req.body.lenght
