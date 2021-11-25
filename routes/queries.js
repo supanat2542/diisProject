@@ -312,17 +312,17 @@ const createTag = async(req, res) => {
 
 const createTime = async(req, res) => {
     try {
-        for (let id in req.body) {
+        // for (let id in req.body) {
             console.log("scan log data")
             console.log(req.body)
                 const time = moment().tz('Asia/Bangkok').format();
                 
                 const sql = `INSERT INTO diis.scanlog
                 (scanner_id, device_address, device_name,scan_timestamp, device_rssi)
-                VALUES('${req.body[id].scanner_id}', '${req.body[id].device_address}', '${req.body[id].device_name}', '${time}',${req.body[id].rssi})`
+                VALUES('${req.body.scanner_id}', '${req.body.device_address}', '${req.body.device_name}', '${time}',${req.body.rssi})`
                 console.log(sql)
                 await pool.query(sql)
-        }
+        // }
         output = {
             status: "success",
             result: req.body.lenght
