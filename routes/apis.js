@@ -10,6 +10,8 @@ const db = require('./queries');
 //     next()
 //   })
 
+router.get('/users', db.getUser);
+
 
   router.get('/tags', db.getTag);
   router.post('/tags', db.createTag);
@@ -58,6 +60,7 @@ const db = require('./queries');
   router.get('/data2', db.getData2)
 
   router.post('/time', db.createTime);
+  router.post('/User', db.createUser);
   
 
 module.exports = router;

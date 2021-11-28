@@ -961,6 +961,74 @@ const test = async (req, res) => {
   }
 
 
+
+/********************************* GET TABLE User **************************************/
+
+const getUser = async(req, res) => {
+    try {
+        const result = await pool.query(`SELECT id_user, id, "password", fname, lname FROM diis."user"; `);
+        output = {
+            status: "success",
+            result: result
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            shows: pool.connect,
+            result: error
+        }
+    }
+    res.json(output);
+}
+/************************************** CREATE TABLE User ************************************/
+
+const createUser = async(req, res) => {
+    try {
+        console.log(req.body)
+        for (let id in req.body) {
+            console.log("scan log data")
+            let id = "NULL";
+            let password = "NULL";
+            let fname = "NULL";
+            let lname = "NULL";
+
+            if (req.body[id].id != undefined) {
+                id = req.body[id].id;
+            }
+            if (req.body[id].password != undefined) {
+                password = req.body[id].password;
+            }
+            if (req.body[id].fname != undefined) {
+                fname = req.body[id].fname;
+            }
+            if (req.body[id].lname != undefined) {
+                lname = req.body[id].lname;
+            }
+
+            const time = moment().tz('Asia/Bangkok').format();
+                
+            const sql = `INSERT INTO diis."user"
+            (id, "password", fname, lname)
+            VALUES('${id}', '${password}', '${fname}', '${lname}');
+            `
+            console.log(sql)
+            await pool.query(sql)
+        }
+        output = {
+            status: "success",
+            result: req.body.lenght
+        }
+    } catch (error) {
+        output = {
+            status: "failed",
+            result: error
+        };
+    }
+    res.json(output);
+}
+
+
+
 module.exports = {
     test,
     getTag,
@@ -997,5 +1065,7 @@ module.exports = {
     updateData,
     getEditItem,
     updateDataItem,
-    createTime
+    createTime,
+    getUser,
+    createUser,
 }
