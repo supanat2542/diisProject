@@ -218,9 +218,15 @@ const getScanlog = async(req, res) => {
                 tag_address = req.query.tag_address;
                 tag_select = `and device_address = '${tag_address}' `
             }
+        let room = "NULL";
+            let room_select = ``;
+                if (req.query.room != undefined) {
+                    room = req.query.room;
+                    room_select = `and room = '${room}' `
+                }
         const result = await pool.query(`select device_address , scanlog.scanner_id , scan_timestamp ,room,floor
         FROM diis.scanlog,diis.scanner,diis.location	
-        Where scanlog.scanner_id = scanner.scanner_address and scanner.location_id = location.location_id ${start_select} ${stop_select} ${tag_select}
+        Where scanlog.scanner_id = scanner.scanner_address and scanner.location_id = location.location_id ${start_select} ${stop_select} ${tag_select} ${room_select}
         order by scan_timestamp desc `);
         output = {
             status: "success",
