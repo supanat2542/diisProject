@@ -9,8 +9,8 @@ const db = require('./queries');
 //     res.header('Access-Control-Allow-Headers','Content-Type, Option, Authorization')
 //     next()
 //   })
-
-router.get('/users', db.getUser);
+  
+  router.get('/users', db.getUser);
 
 
   router.get('/tags', db.getTag);
@@ -60,7 +60,7 @@ router.get('/users', db.getUser);
   router.get('/data2', db.getData2)
 
   router.post('/time', db.createTime);
-  router.post('/User', db.createUser);
+
   
 
 module.exports = router;
